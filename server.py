@@ -1,24 +1,20 @@
 from flask import Flask, request, jsonify
 from torchvision import models, transforms
 from PIL import Image
-import torch, io, urllib.request, json
+import torch
+import torch.nn as nn
+import io
 
 app = Flask(__name__)
 
-# Load model
-model = models.mobilenet_v2(weights="IMAGENET1K_V1")
+# Load YOUR trained model
+model = models.mobilenet_v2(weights=None)
+model.classifier[1] = nn.Linear(model.last_channel, 2)
+model.load_state_dict(torch.load("waste_model.pth", map_location="cpu"))
 model.eval()
 
-# Load ImageNet labels
-url = "https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"
-labels = json.loads(urllib.request.urlopen(url).read())
+CLASSES = ["inorganic", "organic"]
 
-# Organic keywords
-ORGANIC = ['banana','apple','orange','broccoli','carrot','mushroom',
-           'strawberry','lemon','pineapple','pizza','sandwich','egg',
-           'bread','corn','garlic','cabbage','cauliflower','tomato']
-
-# Image preprocessing
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
@@ -28,18 +24,18 @@ transform = transforms.Compose([
 @app.route('/classify', methods=['POST'])
 def classify():
     file = request.files['image']
-    img = Image.open(io.BytesIO(file.read())).convert('RGB')
+    img  = Image.open(io.BytesIO(file.read())).convert('RGB')
     tensor = transform(img).unsqueeze(0)
 
     with torch.no_grad():
         output = model(tensor)
 
-    idx = output.argmax().item()
-    label = labels[idx].lower()
-    result = "organic" if any(w in label for w in ORGANIC) else "inorganic"
+    predicted  = output.argmax(1).item()
+    confidence = torch.softmax(output, dim=1).max().item() * 100
+    result     = CLASSES[predicted]
 
-    print(f"Detected: {label} --> {result}")
-    return jsonify({"result": result, "label": label})
+    print(f"Result: {result.upper()} ({confidence:.1f}% confidence)")
+    return jsonify({"result": result, "confidence": f"{confidence:.1f}%"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
