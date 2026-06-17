@@ -7,7 +7,7 @@ import io
 
 app = Flask(__name__)
 
-# Load YOUR trained model
+# Load trained model
 model = models.mobilenet_v2(weights=None)
 model.classifier[1] = nn.Linear(model.last_channel, 2)
 model.load_state_dict(torch.load("waste_model.pth", map_location="cpu"))
