@@ -61,3 +61,17 @@ async function refresh() {
 
 refresh();
 setInterval(refresh, 3000);
+
+async function clearHistory() {
+  if (!confirm('Clear all history from database?')) return;
+  try {
+    const res = await fetch('/delete-history', { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      alert('✓ History cleared!');
+      refresh();
+    }
+  } catch (e) {
+    alert('Error: ' + e.message);
+  }
+}
