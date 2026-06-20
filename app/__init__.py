@@ -7,6 +7,9 @@ def create_app():
 
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
+    from .database import init_db
+    init_db()
+
     from .routes import register_routes
     register_routes(app)
 
