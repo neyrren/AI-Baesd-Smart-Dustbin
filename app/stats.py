@@ -38,6 +38,12 @@ class StatsTracker:
             "latest":    self._latest,
         }
 
+    def reset(self) -> None:
+        """Reset all in-memory stats."""
+        self._counts  = {"organic": 0, "inorganic": 0}
+        self._history = deque(maxlen=MAX_HISTORY)
+        self._latest  = None
+
 
 # Module-level singleton — one tracker shared across all routes (DRY)
 tracker = StatsTracker()
