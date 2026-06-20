@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Dustbin — Classify Waste</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <link rel="stylesheet" href="/static/upload.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="topnav">
+    <a href="/" class="nav-brand">
+      <div class="nav-icon"><i class="ti ti-leaf"></i></div>
+      <span>Smart Dustbin</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/dashboard" class="nav-link">Dashboard</a>
+      <a href="/upload" class="nav-link active">Classify</a>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <div class="page-header">
+      <h1>Classify waste</h1>
+      <p>Upload an image to classify it as organic or inorganic</p>
+    </div>
+
+    <div class="grid-2">
+
+      <!-- Upload card -->
+      <div class="card">
+        <div class="card-label">Upload image</div>
+        <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+          <i class="ti ti-upload" id="drop-icon"></i>
+          <p id="drop-text">Drop an image or click to upload</p>
+          <span id="drop-sub">JPG, PNG, WEBP supported</span>
+          <img id="preview" class="preview" alt="Preview of selected waste image"/>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" style="display:none"/>
+        <div class="spinner" id="spinner"></div>
+        <button class="classify-btn" id="classifyBtn" disabled onclick="classify()">
+          <i class="ti ti-cpu"></i> Classify waste
+        </button>
+      </div>
+
+      <!-- Result card -->
+      <div class="card result-card">
+        <div class="card-label">Result</div>
+        <div class="result-empty" id="result-empty">
+          <i class="ti ti-analyze"></i>
+          <span>Upload an image to see results</span>
+        </div>
+        <div class="result-content" id="result-content">
+          <div>
+            <div class="result-label">Classification</div>
+            <div class="result-value" id="result-value">—</div>
+            <div id="result-badge"></div>
+          </div>
+          <div class="divider"></div>
+          <div>
+            <div class="result-label">Confidence</div>
+            <div class="conf-row">
+              <span class="conf-label">Model score</span>
+              <div class="bar-track"><div class="bar-fill" id="conf-bar" style="width:0%"></div></div>
+              <span class="conf-val" id="conf-val">0%</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="meta-grid">
+            <div class="meta-row"><span>Model</span><span>MobileNetV2</span></div>
+            <div class="meta-row"><span>Dataset</span><span>22,564 images</span></div>
+            <div class="meta-row"><span>Accuracy</span><span>94.3%</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- History card -->
+    <div class="card">
+      <div class="card-label">Session history</div>
+      <div id="history-list">
+        <p class="history-empty">No classifications yet</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="/static/upload.js"></script>
+</body>
+</html>
