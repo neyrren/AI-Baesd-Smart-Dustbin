@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 
 from .classifier import classify_image
 from .stats      import tracker
-from .database   import save_classification, get_recent, get_counts
+from .database   import save_classification, get_recent, get_counts, delete_all
 
 
 def register_routes(app: Flask) -> None:
@@ -21,6 +21,13 @@ def register_routes(app: Flask) -> None:
     def upload():
         """Serve the upload/classify page."""
         return render_template("upload.html")
+
+    @app.route("/admin")
+    def admin():
+        """Serve the admin database viewer page."""
+        counts  = get_counts()
+        history = get_recent(100)
+        return render_template("admin.html", counts=counts, history=history)
 
     @app.route("/stats")
     def get_stats():
@@ -45,3 +52,10 @@ def register_routes(app: Flask) -> None:
 
         print(f"Result: {result['result'].upper()} ({result['confidence']} confidence)")
         return jsonify(result)
+
+    @app.route("/delete-history", methods=["POST"])
+    def delete_history():
+        """Delete all classification history from database."""
+        delete_all()
+        tracker.reset()  # reset in-memory stats too
+        return jsonify({"success": True, "message": "All history deleted"})
