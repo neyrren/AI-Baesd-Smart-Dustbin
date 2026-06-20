@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Dustbin — Database Admin</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <link rel="stylesheet" href="/static/upload.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <style>
+    .delete-btn {
+      background: #dc2626;
+      color: #fff;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .delete-btn:hover { background: #b91c1c; }
+    .warning { color: #dc2626; font-size: 12px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="topnav">
+    <a href="/" class="nav-brand">
+      <div class="nav-icon"><i class="ti ti-leaf"></i></div>
+      <span>Smart Dustbin</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/dashboard" class="nav-link">Dashboard</a>
+      <a href="/upload" class="nav-link">Classify</a>
+      <a href="/admin" class="nav-link active">Database</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="page-header">
+      <h1>Database Admin</h1>
+      <p>View all classification records stored in the database</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Database Summary</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+        <div style="background: #f9fafb; padding: 14px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 20px; font-weight: 700; color: #1a1d23;">{{ counts.total }}</div>
+          <div style="font-size: 11px; color: #6b7280; margin-top: 4px;">Total Records</div>
+        </div>
+        <div style="background: #dcfce7; padding: 14px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 20px; font-weight: 700; color: #16a34a;">{{ counts.organic }}</div>
+          <div style="font-size: 11px; color: #166534; margin-top: 4px;">Organic</div>
+        </div>
+        <div style="background: #fee2e2; padding: 14px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 20px; font-weight: 700; color: #dc2626;">{{ counts.inorganic }}</div>
+          <div style="font-size: 11px; color: #991b1b; margin-top: 4px;">Inorganic</div>
+        </div>
+      </div>
+      <button class="delete-btn" onclick="deleteHistory()">
+        <i class="ti ti-trash"></i> Delete All History
+      </button>
+      <div class="warning">⚠️ This will permanently delete all records. This action cannot be undone.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">All Records (Latest 100)</div>
+      <table class="history-table" style="width: 100%;">
+        <thead>
+          <tr>
+            <th style="text-align: left;">#</th>
+            <th style="text-align: left;">Timestamp</th>
+            <th style="text-align: left;">Result</th>
+            <th style="text-align: right;">Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if history %}
+            {% for item in history %}
+              <tr>
+                <td style="font-size: 12px; color: #9ca3af;">{{ item['id'] }}</td>
+                <td style="font-size: 12px; color: #374151;">{{ item['timestamp'] }}</td>
+                <td>
+                  <span class="badge {{ item['result'] }}" style="display: inline-block;">
+                    <i class="ti {{ 'ti-leaf' if item['result'] == 'organic' else 'ti-recycle' }}"></i>
+                    {{ item['result'] }}
+                  </span>
+                </td>
+                <td style="font-size: 12px; color: #6b7280; text-align: right;">{{ item['confidence'] }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="4" style="text-align: center; padding: 24px; color: #9ca3af; font-size: 13px;">
+                No records found
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function deleteHistory() {
+    const confirm = window.confirm(
+      '⚠️ Are you sure? This will permanently delete all ' + {{ counts.total }} + ' records. This cannot be undone.'
+    );
+    if (!confirm) return;
+
+    try {
+      const res = await fetch('/delete-history', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        alert('✓ All records deleted!');
+        location.reload();
+      }
+    } catch (e) {
+      alert('Error deleting records: ' + e.message);
+    }
+  }
+</script>
+</body>
+</html>
