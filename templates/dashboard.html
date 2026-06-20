@@ -5,16 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Dustbin — Dashboard</title>
   <link rel="stylesheet" href="/static/style.css"/>
+  <link rel="stylesheet" href="/static/upload.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 </head>
 <body>
+<div class="page-wrap">
+
+  <nav class="topnav">
+    <a href="/" class="nav-brand">
+      <div class="nav-icon"><i class="ti ti-leaf"></i></div>
+      <span>Smart Dustbin</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/dashboard" class="nav-link active">Dashboard</a>
+      <a href="/upload" class="nav-link">Classify</a>
+    </div>
+  </nav>
+
 <div class="app">
 
   <header class="header">
     <div class="header-left">
-      <div class="header-icon">🗑</div>
       <div>
-        <h1>Smart Dustbin</h1>
-        <p class="header-subtitle">AI Waste Classification System</p>
+        <h1>Live Monitoring</h1>
+        <p class="header-subtitle">Real-time waste classification stats</p>
       </div>
     </div>
     <div class="live-badge">
@@ -79,6 +94,7 @@
     </table>
   </div>
 
+</div>
 </div>
 <script src="/static/dashboard.js"></script>
 </body>
