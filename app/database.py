@@ -55,3 +55,11 @@ def get_counts() -> dict:
         organic   = conn.execute("SELECT COUNT(*) FROM classifications WHERE result = 'organic'").fetchone()[0]
         inorganic = conn.execute("SELECT COUNT(*) FROM classifications WHERE result = 'inorganic'").fetchone()[0]
     return {"total": total, "organic": organic, "inorganic": inorganic}
+
+
+def delete_all() -> None:
+    """Delete all classification records from the database."""
+    with get_connection() as conn:
+        conn.execute("DELETE FROM classifications")
+        conn.commit()
+    print("All classification records deleted")
