@@ -63,3 +63,11 @@ def delete_all() -> None:
         conn.execute("DELETE FROM classifications")
         conn.commit()
     print("All classification records deleted")
+
+
+def delete_by_id(record_id: int) -> bool:
+    """Delete a single record by ID."""
+    with get_connection() as conn:
+        conn.execute("DELETE FROM classifications WHERE id = ?", (record_id,))
+        conn.commit()
+    return True
