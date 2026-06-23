@@ -4,132 +4,75 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Dustbin — Welcome</title>
-  <link rel="stylesheet" href="/static/style.css"/>
   <link rel="stylesheet" href="/static/welcome.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 </head>
 <body>
-  <div class="welcome-wrap">
+<div class="page-wrap">
 
-    <nav class="nav">
-      <div class="nav-brand">
-        <div class="nav-icon"><i class="ti ti-leaf"></i></div>
-        <span>Smart Dustbin</span>
-      </div>
-      <a href="/dashboard" class="nav-btn">Go to Dashboard</a>
-    </nav>
+  <nav>
+    <a href="/" class="nav-brand">
+      <div class="nav-icon"><i class="ti ti-leaf"></i></div>
+      <span>Smart Dustbin</span>
+    </a>
+    <a href="/dashboard" class="nav-btn">Dashboard</a>
+  </nav>
 
-    <section class="hero">
-      <div class="hero-badge">AI-Powered Waste Management</div>
-      <h1 class="hero-title">Sort waste smarter,<br/>not harder.</h1>
-      <p class="hero-sub">
-        An intelligent dustbin system that automatically classifies waste into
-        organic and inorganic categories using computer vision and deep learning.
-      </p>
-      <div class="hero-actions">
-        <a href="/dashboard" class="btn-primary">
-          <i class="ti ti-layout-dashboard"></i> Open Dashboard
-        </a>
-        <a href="/upload" class="btn-secondary">
-          <i class="ti ti-upload"></i> Classify Waste
-        </a>
-      </div>
-    </section>
+  <section class="hero">
+    <h1>AI-Based Waste Sorting System</h1>
+    <p>Automatically classify waste into organic and inorganic categories using deep learning. Real-time monitoring with live dashboard and persistent data storage.</p>
+    <div class="hero-buttons">
+      <a href="/dashboard" class="btn-primary"><i class="ti ti-layout-dashboard"></i> Open Dashboard</a>
+      <a href="/upload" class="btn-secondary"><i class="ti ti-upload"></i> Try Classifier</a>
+    </div>
+  </section>
 
-    <section class="stats-bar">
-      <div class="stat-item">
-        <span class="stat-num">94.3%</span>
-        <span class="stat-desc">Model Accuracy</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">22,564</span>
-        <span class="stat-desc">Training Images</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">2</span>
-        <span class="stat-desc">Waste Categories</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num">Real-time</span>
-        <span class="stat-desc">Classification</span>
-      </div>
-    </section>
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-num">94.3%</div>
+      <div class="stat-label">Model Accuracy</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">22,564</div>
+      <div class="stat-label">Training Images</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">Real-time</div>
+      <div class="stat-label">Classification</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">ESP32</div>
+      <div class="stat-label">IoT Hardware</div>
+    </div>
+  </section>
 
-    <section class="features">
-      <div class="feature-card">
-        <div class="feature-icon green">
-          <i class="ti ti-cpu"></i>
-        </div>
-        <h3>AI Classification</h3>
-        <p>Powered by MobileNetV2, a lightweight convolutional neural network fine-tuned on 22,564 waste images for high accuracy sorting.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon blue">
-          <i class="ti ti-wifi"></i>
-        </div>
-        <h3>IoT Integration</h3>
-        <p>ESP32-CAM captures waste images and transmits them wirelessly to the classification server over a local WiFi network.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon amber">
-          <i class="ti ti-chart-bar"></i>
-        </div>
-        <h3>Live Monitoring</h3>
-        <p>A real-time web dashboard tracks every classification, displaying results, confidence scores, and historical data.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon purple">
-          <i class="ti ti-database"></i>
-        </div>
-        <h3>Persistent Storage</h3>
-        <p>Every classification is saved to a local database, ensuring no data is lost between sessions and enabling long-term analysis.</p>
-      </div>
-    </section>
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon"><i class="ti ti-cpu"></i></div>
+      <h3>MobileNetV2 AI</h3>
+      <p>Fine-tuned deep learning model for high-accuracy waste classification</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="ti ti-camera"></i></div>
+      <h3>Computer Vision</h3>
+      <p>Real-time image processing via ESP32-CAM with WiFi connectivity</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="ti ti-chart-bar"></i></div>
+      <h3>Live Dashboard</h3>
+      <p>Monitor classifications with statistics and real-time history tracking</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="ti ti-database"></i></div>
+      <h3>Data Storage</h3>
+      <p>All classifications persisted in SQLite database for analysis</p>
+    </div>
+  </section>
 
-    <section class="how-it-works">
-      <h2>How it works</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4>Waste is placed</h4>
-            <p>The user places waste in front of the dustbin camera</p>
-          </div>
-        </div>
-        <div class="step-arrow"><i class="ti ti-arrow-right"></i></div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4>Image captured</h4>
-            <p>ESP32-CAM captures and sends the image via WiFi</p>
-          </div>
-        </div>
-        <div class="step-arrow"><i class="ti ti-arrow-right"></i></div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4>AI classifies</h4>
-            <p>MobileNetV2 model classifies the waste instantly</p>
-          </div>
-        </div>
-        <div class="step-arrow"><i class="ti ti-arrow-right"></i></div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h4>Bin opens</h4>
-            <p>Servo motor directs waste to the correct compartment</p>
-          </div>
-        </div>
-      </div>
-    </section>
+  <footer>
+    <p>AI-Based Smart Dustbin Capstone Project — MobileNetV2 · Flask · ESP32-CAM</p>
+  </footer>
 
-    <footer class="footer">
-      <p>AI-Based Smart Dustbin &mdash; Capstone Project &mdash; Built with MobileNetV2 &amp; Flask</p>
-    </footer>
-
-  </div>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+</div>
 </body>
 </html>
