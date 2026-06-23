@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 
 from .classifier import classify_image
 from .stats      import tracker
-from .database   import save_classification, get_recent, get_counts, delete_all
+from .database   import save_classification, get_recent, get_counts, delete_all, delete_by_id
 
 
 def register_routes(app: Flask) -> None:
@@ -59,3 +59,12 @@ def register_routes(app: Flask) -> None:
         delete_all()
         tracker.reset()  # reset in-memory stats too
         return jsonify({"success": True, "message": "All history deleted"})
+
+    @app.route("/delete-record/<int:record_id>", methods=["POST"])
+    def delete_record(record_id):
+        """Delete a single record by ID."""
+        try:
+            delete_by_id(record_id)
+            return jsonify({"success": True, "message": f"Record {record_id} deleted"})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
