@@ -4,14 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Dustbin — Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css"/>
-  <link rel="stylesheet" href="/static/upload.css"/>
+  <link rel="stylesheet" href="/static/dashboard.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 </head>
 <body>
 <div class="page-wrap">
 
-  <nav class="topnav">
+  <nav>
     <a href="/" class="nav-brand">
       <div class="nav-icon"><i class="ti ti-leaf"></i></div>
       <span>Smart Dustbin</span>
@@ -23,25 +22,17 @@
     </div>
   </nav>
 
-<div class="app">
+  <div class="live-badge"><span class="live-dot"></span> Live</div>
 
-  <header class="header">
-    <div class="header-left">
-      <div>
-        <h1>Live Monitoring</h1>
-        <p class="header-subtitle">Real-time waste classification stats</p>
-      </div>
-    </div>
-    <div class="live-badge">
-      <span class="live-dot"></span>
-      Live
-    </div>
-  </header>
+  <div class="header">
+    <h1>Live Monitoring</h1>
+    <p class="header-subtitle">Real-time waste classification statistics</p>
+  </div>
 
   <div class="stats-row">
     <div class="stat-card">
       <div class="stat-card-label">Total Scanned</div>
-      <div class="stat-card-value blue" id="total">0</div>
+      <div class="stat-card-value" id="total">0</div>
       <div class="stat-card-sub">items classified</div>
     </div>
     <div class="stat-card">
@@ -58,7 +49,7 @@
     </div>
     <div class="stat-card">
       <div class="stat-card-label">Last Confidence</div>
-      <div class="stat-card-value" id="last-conf" style="font-size:28px;">—</div>
+      <div class="stat-card-value" id="last-conf" style="font-size:24px;">—</div>
       <div class="stat-card-sub">model certainty</div>
     </div>
   </div>
@@ -68,8 +59,8 @@
       <div class="latest-card-label">Latest Classification</div>
       <div class="latest-result-text" id="latest-result">Waiting for waste...</div>
       <div class="latest-meta">
-        <div class="latest-meta-item">Time: <span id="latest-time">—</span></div>
-        <div class="latest-meta-item">Confidence: <span id="latest-confidence">—</span></div>
+        <div>Time: <span id="latest-time">—</span></div>
+        <div>Confidence: <span id="latest-confidence">—</span></div>
       </div>
     </div>
     <div class="latest-badge" id="latest-badge"></div>
@@ -86,15 +77,15 @@
           <th>Time</th>
           <th>Result</th>
           <th>Confidence</th>
+          <th></th>
         </tr>
       </thead>
       <tbody id="history-body">
-        <tr class="empty-row"><td colspan="3">No classifications yet — system is ready</td></tr>
+        <tr class="empty-row"><td colspan="4">No classifications yet — system is ready</td></tr>
       </tbody>
     </table>
   </div>
 
-</div>
 </div>
 <script src="/static/dashboard.js"></script>
 </body>
