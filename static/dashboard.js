@@ -5,30 +5,28 @@ function updateStats(data) {
   const oPct  = total > 0 ? Math.round(data.organic   / total * 100) : 0;
   const iPct  = total > 0 ? Math.round(data.inorganic / total * 100) : 0;
 
-  $('total').textContent          = total;
-  $('organic-count').textContent  = data.organic;
+  $('total').textContent           = total;
+  $('organic-count').textContent   = data.organic;
   $('inorganic-count').textContent = data.inorganic;
-  $('organic-bar').style.width    = oPct + '%';
-  $('inorganic-bar').style.width  = iPct + '%';
-  $('organic-pct').textContent    = oPct + '% of total';
-  $('inorganic-pct').textContent  = iPct + '% of total';
+  $('organic-bar').style.width     = oPct + '%';
+  $('inorganic-bar').style.width   = iPct + '%';
+  $('organic-pct').textContent     = oPct + '% of total';
+  $('inorganic-pct').textContent   = iPct + '% of total';
 }
 
 function updateLatest(latest) {
   if (!latest) return;
 
-  const resultEl = $('latest-result');
-  const badgeEl  = $('latest-badge');
+  const val  = $('latest-result');
+  const pill = $('latest-pill');
 
-  resultEl.textContent = latest.result.charAt(0).toUpperCase() + latest.result.slice(1);
-  resultEl.className   = 'latest-result-text ' + latest.result;
-
-  badgeEl.textContent  = latest.result.toUpperCase();
-  badgeEl.className    = 'latest-badge ' + latest.result;
+  val.textContent = latest.result.charAt(0).toUpperCase() + latest.result.slice(1);
+  val.className   = 'latest-value ' + latest.result;
+  pill.textContent = latest.result.charAt(0).toUpperCase() + latest.result.slice(1);
+  pill.className   = 'latest-pill ' + latest.result;
 
   $('latest-time').textContent       = latest.time;
   $('latest-confidence').textContent = latest.confidence;
-  $('last-conf').textContent         = latest.confidence;
 }
 
 function updateHistory(history) {
@@ -36,7 +34,7 @@ function updateHistory(history) {
   $('history-count').textContent = history.length + ' record' + (history.length !== 1 ? 's' : '');
 
   if (!history.length) {
-    tbody.innerHTML = '<tr class="empty-row"><td colspan="3">No classifications yet — system is ready</td></tr>';
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No records yet — system is ready and waiting</td></tr>';
     return;
   }
 
@@ -44,7 +42,12 @@ function updateHistory(history) {
     <tr>
       <td class="time-text">${h.time}</td>
       <td><span class="result-pill ${h.result}">${h.result}</span></td>
-      <td class="confidence-text">${h.confidence}</td>
+      <td class="conf-text">${h.confidence}</td>
+      <td>
+        <button class="delete-btn" onclick="deleteRecord(${h.id})" title="Delete record" aria-label="Delete record">
+          <i class="ti ti-trash" aria-hidden="true"></i>
+        </button>
+      </td>
     </tr>
   `).join('');
 }
@@ -59,19 +62,16 @@ async function refresh() {
   } catch (_) {}
 }
 
-refresh();
-setInterval(refresh, 3000);
-
-async function clearHistory() {
-  if (!confirm('Clear all history from database?')) return;
+async function deleteRecord(id) {
+  if (!confirm('Delete this record?')) return;
   try {
-    const res = await fetch('/delete-history', { method: 'POST' });
+    const res = await fetch(`/delete-record/${id}`, { method: 'POST' });
     const data = await res.json();
-    if (data.success) {
-      alert('✓ History cleared!');
-      refresh();
-    }
+    if (data.success) refresh();
   } catch (e) {
-    alert('Error: ' + e.message);
+    alert('Error deleting record');
   }
 }
+
+refresh();
+setInterval(refresh, 3000);
