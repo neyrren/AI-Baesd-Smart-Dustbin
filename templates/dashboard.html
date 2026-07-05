@@ -8,85 +8,101 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 </head>
 <body>
-<div class="page-wrap">
 
-  <nav>
-    <a href="/" class="nav-brand">
-      <div class="nav-icon"><i class="ti ti-leaf"></i></div>
-      <span>Smart Dustbin</span>
-    </a>
-    <div class="nav-links">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/dashboard" class="nav-link active">Dashboard</a>
-      <a href="/upload" class="nav-link">Classify</a>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <div class="nav-icon"><i class="ti ti-leaf" aria-hidden="true"></i></div>
+        <span>Smart Dustbin</span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/dashboard" class="nav-link active">Dashboard</a>
+        <a href="/upload" class="nav-link">Classify</a>
+      </div>
     </div>
   </nav>
 
-  <div class="live-badge"><span class="live-dot"></span> Live</div>
+  <main class="main">
+    <div class="page-inner">
 
-  <div class="header">
-    <h1>Live Monitoring</h1>
-    <p class="header-subtitle">Real-time waste classification statistics</p>
-  </div>
-
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-card-label">Total Scanned</div>
-      <div class="stat-card-value" id="total">0</div>
-      <div class="stat-card-sub">items classified</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-label">Organic</div>
-      <div class="stat-card-value green" id="organic-count">0</div>
-      <div class="progress-bar"><div class="progress-fill green" id="organic-bar" style="width:0%"></div></div>
-      <div class="stat-card-sub" id="organic-pct">0% of total</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-label">Inorganic</div>
-      <div class="stat-card-value red" id="inorganic-count">0</div>
-      <div class="progress-bar"><div class="progress-fill red" id="inorganic-bar" style="width:0%"></div></div>
-      <div class="stat-card-sub" id="inorganic-pct">0% of total</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-label">Last Confidence</div>
-      <div class="stat-card-value" id="last-conf" style="font-size:24px;">—</div>
-      <div class="stat-card-sub">model certainty</div>
-    </div>
-  </div>
-
-  <div class="latest-card">
-    <div class="latest-left">
-      <div class="latest-card-label">Latest Classification</div>
-      <div class="latest-result-text" id="latest-result">Waiting for waste...</div>
-      <div class="latest-meta">
-        <div>Time: <span id="latest-time">—</span></div>
-        <div>Confidence: <span id="latest-confidence">—</span></div>
+      <!-- Page header -->
+      <div class="page-header">
+        <div>
+          <h1>Waste Monitoring</h1>
+          <p class="page-sub">Real-time classification records for this institution</p>
+        </div>
+        <div class="live-badge">
+          <span class="live-dot" aria-hidden="true"></span> Live
+        </div>
       </div>
-    </div>
-    <div class="latest-badge" id="latest-badge"></div>
-  </div>
 
-  <div class="history-card">
-    <div class="history-card-header">
-      <span class="history-card-title">Recent History</span>
-      <span class="history-card-count" id="history-count">0 records</span>
-    </div>
-    <table class="history-table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Result</th>
-          <th>Confidence</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="history-body">
-        <tr class="empty-row"><td colspan="4">No classifications yet — system is ready</td></tr>
-      </tbody>
-    </table>
-  </div>
+      <!-- Stat cards -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total sorted today</div>
+          <div class="stat-value" id="total">0</div>
+          <div class="stat-hint">waste items processed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Organic waste</div>
+          <div class="stat-value green" id="organic-count">0</div>
+          <div class="stat-bar">
+            <div class="stat-bar-fill green" id="organic-bar" style="width:0%"></div>
+          </div>
+          <div class="stat-hint" id="organic-pct">0% of total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Inorganic waste</div>
+          <div class="stat-value red" id="inorganic-count">0</div>
+          <div class="stat-bar">
+            <div class="stat-bar-fill red" id="inorganic-bar" style="width:0%"></div>
+          </div>
+          <div class="stat-hint" id="inorganic-pct">0% of total</div>
+        </div>
+      </div>
 
-</div>
-<script src="/static/dashboard.js"></script>
+      <!-- Latest result -->
+      <div class="latest-card" id="latest-card">
+        <div class="latest-left">
+          <div class="latest-label">Latest classification</div>
+          <div class="latest-value" id="latest-result">Waiting for waste...</div>
+          <div class="latest-meta">
+            <span>Time: <strong id="latest-time">—</strong></span>
+            <span>Confidence: <strong id="latest-confidence">—</strong></span>
+          </div>
+        </div>
+        <div class="latest-pill" id="latest-pill"></div>
+      </div>
+
+      <!-- History table -->
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <span class="table-title">Classification history</span>
+            <span class="table-count" id="history-count">0 records</span>
+          </div>
+        </div>
+        <table class="history-table" aria-label="Waste classification history">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Classification</th>
+              <th>Confidence</th>
+              <th aria-label="Actions"></th>
+            </tr>
+          </thead>
+          <tbody id="history-body">
+            <tr class="empty-row">
+              <td colspan="4">No records yet — system is ready and waiting</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/static/dashboard.js"></script>
 </body>
 </html>
