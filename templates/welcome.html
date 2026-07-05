@@ -3,76 +3,216 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Dustbin — Welcome</title>
+  <title>Smart Dustbin — AI Waste Sorting</title>
   <link rel="stylesheet" href="/static/welcome.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 </head>
 <body>
-<div class="page-wrap">
 
-  <nav>
-    <a href="/" class="nav-brand">
-      <div class="nav-icon"><i class="ti ti-leaf"></i></div>
-      <span>Smart Dustbin</span>
-    </a>
-    <a href="/dashboard" class="nav-btn">Dashboard</a>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <div class="nav-icon"><i class="ti ti-leaf" aria-hidden="true"></i></div>
+        <span>Smart Dustbin</span>
+      </a>
+      <div class="nav-links">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/upload" class="nav-link nav-cta">Try Classifier</a>
+      </div>
+    </div>
   </nav>
 
-  <section class="hero">
-    <h1>AI-Based Waste Sorting System</h1>
-    <p>Automatically classify waste into organic and inorganic categories using deep learning. Real-time monitoring with live dashboard and persistent data storage.</p>
-    <div class="hero-buttons">
-      <a href="/dashboard" class="btn-primary"><i class="ti ti-layout-dashboard"></i> Open Dashboard</a>
-      <a href="/upload" class="btn-secondary"><i class="ti ti-upload"></i> Try Classifier</a>
+  <!-- HERO SLIDER (full width) -->
+  <section class="hero-slider">
+    <div class="slides-container" id="slidesContainer">
+
+      <div class="slide-full active" style="background-image:url('/static/images/slide1.jpg')">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-label">The Problem</span>
+          <h2>Millions of tonnes of waste are mismanaged every year</h2>
+          <p>Mixed waste in landfills produces methane — a greenhouse gas 80 times more potent than CO₂. Proper sorting is the first step to reversing this.</p>
+        </div>
+      </div>
+
+      <div class="slide-full" style="background-image:url('/static/images/slide2.jpg')">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-label organic-label">Organic Waste</span>
+          <h2>Food scraps and garden waste deserve better than landfill</h2>
+          <p>Organic waste composted correctly returns nutrients to the soil. When mixed with plastics, that opportunity is lost forever.</p>
+        </div>
+      </div>
+
+      <div class="slide-full" style="background-image:url('/static/images/slide3.jpg')">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-label inorganic-label">Inorganic Waste</span>
+          <h2>Plastics and metals are resources — not rubbish</h2>
+          <p>Recyclable materials recovered from inorganic waste reduce the demand for raw material extraction, saving energy and protecting natural environments.</p>
+        </div>
+      </div>
+
+      <div class="slide-full" style="background-image:url('/static/images/slide4.jpg')">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-label ai-label">Our Solution</span>
+          <h2>AI that sorts waste automatically — no human effort required</h2>
+          <p>This system classifies every item deposited into the bin using deep learning and computer vision — no human effort required.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Arrows -->
+    <button class="slider-prev" onclick="changeSlide(-1)" aria-label="Previous slide">
+      <i class="ti ti-chevron-left" aria-hidden="true"></i>
+    </button>
+    <button class="slider-next" onclick="changeSlide(1)" aria-label="Next slide">
+      <i class="ti ti-chevron-right" aria-hidden="true"></i>
+    </button>
+
+    <!-- Dots -->
+    <div class="slider-dots">
+      <button class="dot active" onclick="goTo(0)" aria-label="Slide 1"></button>
+      <button class="dot" onclick="goTo(1)" aria-label="Slide 2"></button>
+      <button class="dot" onclick="goTo(2)" aria-label="Slide 3"></button>
+      <button class="dot" onclick="goTo(3)" aria-label="Slide 4"></button>
+    </div>
+
+    <!-- CTA overlay buttons -->
+    <div class="hero-actions">
+      <a href="/dashboard" class="btn-primary"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> View Dashboard</a>
+      <a href="/upload" class="btn-ghost"><i class="ti ti-upload" aria-hidden="true"></i> Classify Waste</a>
     </div>
   </section>
 
-  <section class="stats">
-    <div class="stat-card">
-      <div class="stat-num">94.3%</div>
-      <div class="stat-label">Model Accuracy</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">22,564</div>
-      <div class="stat-label">Training Images</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">Real-time</div>
-      <div class="stat-label">Classification</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">ESP32</div>
-      <div class="stat-label">IoT Hardware</div>
+  <!-- INTRO TEXT -->
+  <section class="intro">
+    <div class="section-inner">
+      <div class="intro-grid">
+        <div class="intro-text">
+          <h2>Sorting waste is one of the most impactful things an institution can do</h2>
+          <p>
+            Universities, hospitals, and offices generate enormous quantities of waste daily.
+            When that waste is not segregated — when banana peels end up with plastic bottles
+            and paper cups — it all goes to landfill, contaminating potentially recyclable
+            materials and accelerating environmental degradation.
+          </p>
+          <p>
+            This AI-based smart dustbin eliminates the need to rely on people making the
+            right sorting decision. The moment waste is placed in front of the bin, the
+            system's camera captures it, the AI classifies it, and the servo motor directs
+            it to the correct compartment — organic or inorganic — automatically and instantly.
+          </p>
+        </div>
+        <div class="intro-stats">
+          <div class="intro-stat">
+            <div class="intro-stat-num">2</div>
+            <div class="intro-stat-label">Waste categories sorted</div>
+          </div>
+          <div class="intro-stat">
+            <div class="intro-stat-num">24/7</div>
+            <div class="intro-stat-label">Fully automated operation</div>
+          </div>
+          <div class="intro-stat">
+            <div class="intro-stat-num">Zero</div>
+            <div class="intro-stat-label">Human effort required</div>
+          </div>
+          <div class="intro-stat">
+            <div class="intro-stat-num">Live</div>
+            <div class="intro-stat-label">Real-time monitoring</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="features">
-    <div class="feature-card">
-      <div class="feature-icon"><i class="ti ti-cpu"></i></div>
-      <h3>MobileNetV2 AI</h3>
-      <p>Fine-tuned deep learning model for high-accuracy waste classification</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><i class="ti ti-camera"></i></div>
-      <h3>Computer Vision</h3>
-      <p>Real-time image processing via ESP32-CAM with WiFi connectivity</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><i class="ti ti-chart-bar"></i></div>
-      <h3>Live Dashboard</h3>
-      <p>Monitor classifications with statistics and real-time history tracking</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><i class="ti ti-database"></i></div>
-      <h3>Data Storage</h3>
-      <p>All classifications persisted in SQLite database for analysis</p>
+  <!-- IMPACT -->
+  <section class="impact">
+    <div class="section-inner">
+      <h2 class="section-title">Why it matters</h2>
+      <p class="section-sub">The consequences of poor waste segregation reach far beyond the bin</p>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-icon" style="background:#dcfce7;color:#166534;">
+            <i class="ti ti-world" aria-hidden="true"></i>
+          </div>
+          <h3>Environmental protection</h3>
+          <p>Correct segregation reduces landfill overflow, prevents soil and water contamination, and significantly lowers greenhouse gas emissions from decomposing mixed waste.</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon" style="background:#dbeafe;color:#1d4ed8;">
+            <i class="ti ti-refresh" aria-hidden="true"></i>
+          </div>
+          <h3>Resource recovery</h3>
+          <p>Separating recyclables from organic waste ensures valuable materials like plastics and metals re-enter the production cycle instead of being permanently lost to landfill.</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon" style="background:#fef3c7;color:#92400e;">
+            <i class="ti ti-building" aria-hidden="true"></i>
+          </div>
+          <h3>Cleaner institutions</h3>
+          <p>Automated sorting removes dependency on manual effort and individual awareness, maintaining consistent hygiene and compliance standards in high-traffic facilities.</p>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon" style="background:#ede9fe;color:#5b21b6;">
+            <i class="ti ti-chart-line" aria-hidden="true"></i>
+          </div>
+          <h3>Data-driven management</h3>
+          <p>Every classification is logged and monitored in real time, giving facility managers evidence-based insight into waste generation patterns and sorting performance.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer>
-    <p>AI-Based Smart Dustbin Capstone Project — MobileNetV2 · Flask · ESP32-CAM</p>
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="section-inner">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-sub">Four automated steps — from deposit to sorted bin</p>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Object detected</h4>
+            <p>Ultrasonic sensor detects waste placed within 20cm and triggers the system automatically</p>
+          </div>
+        </div>
+        <div class="step-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Image captured</h4>
+            <p>ESP32-CAM photographs the waste and transmits it to the Flask server via WiFi</p>
+          </div>
+        </div>
+        <div class="step-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>AI classifies</h4>
+            <p>MobileNetV2 model analyses the image and returns an organic or inorganic result</p>
+          </div>
+        </div>
+        <div class="step-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Bin opens</h4>
+            <p>Servo motor rotates to direct the waste into the correct compartment automatically</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>AI-Based Smart Dustbin for Automated Waste Sorting in Public Institutions &mdash; By Britney</p>
   </footer>
 
-</div>
+  <script src="/static/welcome.js"></script>
 </body>
 </html>
